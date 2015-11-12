@@ -12,9 +12,9 @@ def welcome(request):
 	return HttpResponse("Hello, world. You're at the polls.")
 
 def vote(request,question_id):
-	p = get_object_or_404(Question,pk=question_id)
+	#p = get_object_or_404(Question,pk=question_id)
+	p = Question.objects.get(pk=question_id)
 	selected_choice=p.choice_set.get(pk=request.POST['choice'])
 	selected_choice.votes += 1
 	selected_choice.save()
-	#return HttpResponse("Vote successfully!")
-	return HttpResponseRedirect(reverse("polls"))
+	return HttpResponseRedirect(reverse("polls:welcome"))
